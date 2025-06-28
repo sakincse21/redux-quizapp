@@ -6,7 +6,8 @@ const initialState = {
     questions: quizData,
     currentQuestionIndex: 0,
     userAnswer: Array(quizData.length).fill(null),
-    quizComplete: false
+    quizComplete: false,
+    questionCheck: false
 }
 
 export const quizSlice = createSlice({
@@ -19,19 +20,25 @@ export const quizSlice = createSlice({
         state.userAnswer[questionIndex]=answer;
     },
     nextQuestion:(state)=>{
-      if(state.currentQuestionIndex===state.questions.length-1)
+      if(state.currentQuestionIndex===state.questions.length-1){
         state.quizComplete=true;
+        state.questionCheck=false;
+      }
       if(state.currentQuestionIndex<state.questions.length-1 && state.userAnswer[state.currentQuestionIndex]!==null)
             state.currentQuestionIndex++;
     },
     prevQuestion:(state)=>{
         if(state.currentQuestionIndex>0)
             state.currentQuestionIndex--;
+    },
+    setQuestionCheck:(state)=>{
+      state.questionCheck=true;
+      state.currentQuestionIndex=0;
     }
   }
 })
 
-export const { setAnswer, nextQuestion, prevQuestion } = quizSlice.actions
+export const { setAnswer, nextQuestion, prevQuestion, setQuestionCheck } = quizSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.quiz.questions;

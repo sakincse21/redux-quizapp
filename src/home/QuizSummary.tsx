@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -5,7 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { useAppSelector } from "@/redux/hooks"
+import { setQuestionCheck } from "@/redux/features/quizSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 
 const getPerformance = (percentage: number) =>{
   if(percentage>=90){
@@ -31,6 +33,7 @@ const getPerformance = (percentage: number) =>{
 }
 
 const QuizSummary = () => {
+  const dispatch = useAppDispatch()
   const {questions,userAnswer} = useAppSelector((state)=>state.quiz);
   console.log(userAnswer);
   
@@ -42,7 +45,7 @@ const QuizSummary = () => {
   const {rating, bgColor} = getPerformance(correctPercentage);
   return (
     <div>
-      <Card className="max-w-lg mx-auto p-6 shadow-xl rounded-xl">
+      <Card className="w-[450px] mx-auto p-6 shadow-xl rounded-xl">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Quiz Summary</CardTitle>
         </CardHeader>
@@ -63,6 +66,9 @@ const QuizSummary = () => {
           </div>
           <div className="mt-4">
             <p className="text-sm">Great Job! Keep practicing...</p>
+          </div>
+          <div className="mt-4">
+          <Button onClick={()=>dispatch(setQuestionCheck())}>Check Questions</Button>
           </div>
         </CardContent>
       </Card>
