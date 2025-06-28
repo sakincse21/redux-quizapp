@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { setQuestionCheck } from "@/redux/features/quizSlice"
+import { setQuestionCheck, setReset } from "@/redux/features/quizSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 
 const getPerformance = (percentage: number) =>{
@@ -67,8 +67,9 @@ const QuizSummary = () => {
           <div className="mt-4">
             <p className="text-sm">Great Job! Keep practicing...</p>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 flex justify-between">
           <Button onClick={()=>dispatch(setQuestionCheck())}>Check Questions</Button>
+          <Button onClick={()=>dispatch(setReset())}>Reset</Button>
           </div>
         </CardContent>
       </Card>
